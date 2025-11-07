@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Favicon (logo di tab browser) -->
+    <link rel="icon" href="img/logoqr.png" type="image/png">
+    <link rel="shortcut icon" href="img/logoqr.png" type="image/x-icon">
+    <link rel="apple-touch-icon" href="img/logoqr.png">
+    
+    <title>QRaja QR Code Generator</title>
+    
+    <!-- Library QR Code dari CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.1/build/qrcode.min.js"></script>
+    
+    <!-- Font Awesome untuk icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Font Poppins -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
+    
+    <!-- File CSS eksternal -->
+    <link rel="stylesheet" href="qr.css">
+</head>
+<body>
+    <!-- ==================== SPLASH SCREEN ==================== -->
+    <!-- Layar loading yang muncul pertama kali -->
+    <div id="splashScreen">
+        <div class="logo-container">
+            <i class="fas fa-qrcode logo"></i>
+            <h1 class="splash-title">QRaja</h1>
+        </div>
+        <p class="splash-subtitle">Generator QR Code modern dan mudah digunakan untuk teks, link, dan banyak lagi</p>
+        <div class="progress-bar">
+            <div class="progress"></div>
+        </div>
+    </div>
+
+    <!-- ==================== CUSTOM ALERT ==================== -->
+    <!-- Notifikasi kustom yang muncul jika input kosong -->
+    <div id="customAlert" class="custom-alert">
+        <i class="fas fa-exclamation-circle"></i>
+        <span>Silakan masukkan teks atau link terlebih dahulu</span>
+    </div>
+
+    <!-- ==================== NAVBAR ==================== -->
+    <!-- Menu navigasi di bagian atas -->
+    <nav class="navbar">
+        <a href="#" class="nav-brand" id="homeLink">
+            <i class="fas fa-qrcode"></i> QRaja
+        </a>
+        
+        <ul class="nav-menu">
+            <li class="nav-item"><a class="nav-link" data-page="home">Home</a></li>
+            <li class="nav-item"><a class="nav-link" data-page="about">About</a></li>
+            <li class="nav-item"><a class="nav-link" data-page="privacy">Privacy</a></li>
+            <li class="nav-item"><a class="nav-link" data-page="contact">Contact</a></li>
+            <li class="nav-item">
+                <div class="nav-actions">
+                    <button id="themeToggle" class="theme-toggle">
+                        <i class="fas fa-moon"></i> <span class="theme-text">Toggle Theme</span>
+                    </button>
+                </div>
+            </li>
+        </ul>
+        
+        <!-- Tombol hamburger untuk mobile -->
+        <div class="hamburger" id="hamburgerMenu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </nav>
+
+    <!-- ==================== HALAMAN HOME ==================== -->
+    <div id="homePage" class="content-page">
+        <!-- Hero Section - Banner utama -->
+        <section class="hero">
+            <h1 class="hero-title">QRaja</h1>
+            <p class="hero-description">Generator QR Code modern yang memudahkan Anda membuat kode QR dari teks atau link. Cukup masukkan teks atau URL, dan dapatkan kode QR yang dapat di-download secara instan.</p>
+            <button class="cta-button" id="generateNowBtn">
+                <i class="fas fa-bolt"></i> Generate Now
+            </button>
+        </section>
+
+        <!-- Container Generator QR Code -->
+        <div class="container">
+            <header>
+                <h1>QR Code Generator</h1>
+                <p>Ubah teks atau link menjadi QR code dengan mudah</p>
+            </header>
+            
+            <div class="content">
+                <!-- Input untuk teks/link -->
+                <div class="input-group">
+                    <label for="qrText">Masukkan Teks atau Link</label>
+                    <input type="text" id="qrText" class="input-field" placeholder="Ketik teks atau tempel link di sini...">
+                </div>
+                
+                <!-- Tombol Generate -->
+                <button id="generateBtn" class="generate-btn">
+                    <i class="fas fa-qrcode"></i> Generate QR Code
+                </button>
+                
+                <!-- Hasil QR Code (hidden by default) -->
+                <div id="resultContainer" class="result-container">
+                    <div class="qr-code">
+                        <canvas id="qrResult"></canvas>
+                    </div>
+                    <br>
+                    <div class="button-group">
+                        <button id="downloadBtn" class="download-btn">
+                            <i class="fas fa-download"></i> Download QR Code
+                        </button>
+                        <button id="donateBtn" class="donate-btn">
+                            <i class="fas fa-heart"></i> Donate to Developer
+                        </button>
+                    </div>
+                    
+                    <div class="info-text">
+                        <i class="fas fa-info-circle"></i>
+                        <span>Jika teks Anda berisi link, QR code akan langsung mengarahkan ke link tersebut ketika di-scan</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Features Section - Keunggulan aplikasi -->
+        <section class="features">
+            <h2 class="section-title">Keunggulan QRaja</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3 class="feature-title">Cepat dan Mudah</h3>
+                    <p class="feature-description">Generate QR code dalam hitungan detik dengan antarmuka yang intuitif dan mudah digunakan.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-paint-brush"></i>
+                    </div>
+                    <h3 class="feature-title">Desain Modern</h3>
+                    <p class="feature-description">Tampilan yang elegan dan modern dengan dukungan mode terang dan gelap.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3 class="feature-title">Responsif</h3>
+                    <p class="feature-description">Bekerja dengan sempurna di semua perangkat, mulai dari desktop hingga ponsel.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-download"></i>
+                    </div>
+                    <h3 class="feature-title">Download Instan</h3>
+                    <p class="feature-description">Download QR code hasil generate dengan mudah dalam format PNG.</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- ==================== HALAMAN ABOUT ==================== -->
+    <div id="aboutPage" class="content-page">
+        <button class="back-button" data-page="home">
+            <i class="fas fa-arrow-left"></i> Kembali
+        </button>
+        <h2>Tentang QRaja</h2>
+        <p>QRaja adalah platform generasi QR code modern yang dirancang untuk memudahkan pengguna dalam membuat kode QR dari teks atau URL. Dengan antarmuka yang intuitif dan fitur yang lengkap, QRaja menjadi pilihan tepat bagi siapa saja yang membutuhkan QR code dengan cepat dan mudah.</p>
+        
+        <p>Dikembangkan dengan teknologi terkini, QRaja memastikan bahwa setiap kode QR yang dihasilkan memiliki kualitas terbaik dan dapat dipindai dengan mudah oleh perangkat mana pun.</p>
+        
+        <p>Kami terus berinovasi untuk memberikan pengalaman terbaik bagi pengguna, dengan fokus pada kecepatan, kemudahan penggunaan, dan kualitas hasil.</p>
+    </div>
+
+    <!-- ==================== HALAMAN PRIVACY ==================== -->
+    <div id="privacyPage" class="content-page">
+        <button class="back-button" data-page="home">
+            <i class="fas fa-arrow-left"></i> Kembali
+        </button>
+        <h2>Kebijakan Privasi & Etika Penggunaan</h2>
+        <p>Kami di QRaja sangat menghargai dan melindungi privasi Anda. Kebijakan privasi ini menjelaskan bagaimana kami menangani informasi yang mungkin terkumpul ketika Anda menggunakan layanan kami.</p>
+        
+        <h3>Informasi yang Kami Kumpulkan</h3>
+        <p>QRaja tidak mengumpulkan, menyimpan, atau membagikan data pribadi Anda. Semua proses generasi QR code dilakukan sepenuhnya di peramban Anda, dan kami tidak menyimpan teks atau URL yang Anda masukkan ke dalam sistem kami.</p>
+        
+        <h3>Cookies</h3>
+        <p>Kami hanya menggunakan cookies yang diperlukan untuk menyimpan preferensi tema (terang/gelap) Anda, dan informasi ini disimpan secara lokal di perangkat Anda.</p>
+        
+        <h3>Etika Penggunaan QR Code</h3>
+        <p>Kami mendorong penggunaan QR code yang bertanggung jawab dan etis. Dengan menggunakan layanan kami, Anda setuju untuk tidak:</p>
+        <ul>
+            <li>Membuat QR code yang berisi konten ilegal, termasuk namun tidak terbatas pada materi pornografi, perjudian, atau konten yang melanggar hukum</li>
+            <li>Membuat QR code yang berisi ujaran kebencian, konten SARA, atau materi yang bersifat diskriminatif</li>
+            <li>Membuat QR code untuk tujuan penipuan, phishing, atau aktivitas jahat lainnya</li>
+            <li>Membuat QR code yang melanggar hak kekayaan intelektual orang lain</li>
+            <li>Menyebarkan konten yang dapat merugikan atau membahayakan orang lain</li>
+        </ul>
+        
+        <h3>Kewajiban Pengguna</h3>
+        <p>Sebagai pengguna QRaja, Anda bertanggung jawab penuh atas konten yang Anda buat menjadi QR code. Kami tidak bertanggung jawab atas penyalahgunaan platform ini untuk kegiatan yang melanggar hukum atau etika.</p>
+        
+        <h3>Pelaporan Penyalahgunaan</h3>
+        <p>Jika Anda menemukan QR code yang dibuat menggunakan layanan kami yang mengandung konten ilegal atau tidak pantas, silakan laporkan kepada kami melalui halaman kontak.</p>
+    </div>
+
+    <!-- ==================== HALAMAN CONTACT ==================== -->
+    <div id="contactPage" class="content-page">
+        <button class="back-button" data-page="home">
+            <i class="fas fa-arrow-left"></i> Kembali
+        </button>
+        <h2>Hubungi Kami</h2>
+        <p>Jika Anda memiliki pertanyaan, saran, atau membutuhkan bantuan terkait QRaja, jangan ragu untuk menghubungi kami melalui informasi di bawah ini:</p>
+        
+        <div class="feature-card" style="text-align: left; margin: 20px 0;">
+            <h3 style="margin-bottom: 15px;"><i class="fas fa-envelope"></i> Email</h3>
+            <p>Ryzareth@gmail.com</p>
+        </div>
+        
+        <div class="feature-card" style="text-align: left; margin: 20px 0;">
+            <h3 style="margin-bottom: 15px;"><i class="fas fa-phone"></i> Telepon</h3>
+            <p>+62 821-2367-2640</p>
+        </div>
+        
+        <div class="feature-card" style="text-align: left; margin: 20px 0;">
+            <h3 style="margin-bottom: 15px;"><i class="fas fa-map-marker-alt"></i> Alamat</h3>
+            <p>Indonesia</p>
+        </div>
+    </div>
+
+    <!-- ==================== HALAMAN LAINNYA ==================== -->
+    <!-- Halaman Terms, DMCA, Security, Cookie, FAQs, Help -->
+    <!-- (Konten sama seperti sebelumnya, saya singkat di sini) -->
+    
+    <div id="termsPage" class="content-page">
+        <button class="back-button" data-page="home">
+            <i class="fas fa-arrow-left"></i> Kembali
+        </button>
+        <h2>Syarat dan Ketentuan Layanan</h2>
+        <!-- Isi konten terms -->
+    </div>
+
+    <div id="dmcaPage" class="content-page">
+        <button class="back-button" data-page="home">
+            <i class="fas fa-arrow-left"></i> Kembali
+        </button>
+        <h2>Kebijakan DMCA</h2>
+        <!-- Isi konten DMCA -->
+    </div>
+
+    <div id="securityPage" class="content-page">
+        <button class="back-button" data-page="home">
+            <i class="fas fa-arrow-left"></i> Kembali
+        </button>
+        <h2>Keamanan</h2>
+        <!-- Isi konten security -->
+    </div>
+
+    <div id="cookiePage" class="content-page">
+        <button class="back-button" data-page="home">
+            <i class="fas fa-arrow-left"></i> Kembali
+        </button>
+        <h2>Kebijakan Cookie</h2>
+        <!-- Isi konten cookie -->
+    </div>
+
+    <div id="faqsPage" class="content-page">
+        <button class="back-button" data-page="home">
+            <i class="fas fa-arrow-left"></i> Kembali
+        </button>
+        <h2>FAQ</h2>
+        <!-- Isi konten FAQs -->
+    </div>
+
+    <div id="helpPage" class="content-page">
+        <button class="back-button" data-page="home">
+            <i class="fas fa-arrow-left"></i> Kembali
+        </button>
+        <h2>Pusat Bantuan</h2>
+        <!-- Isi konten help -->
+    </div>
+
+    <!-- ==================== FOOTER ==================== -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>About QRaja</h3>
+                <p>QRaja adalah generator QR code modern yang membantu Anda membuat kode QR untuk berbagai keperluan dengan mudah dan cepat.</p>
+                <div class="footer-social">
+                    <a href="https://t.me/ryzamarket"><i class="fab fa-telegram"></i></a>
+                    <a href="https://discord.gg/cCney2BTqZ"><i class="fab fa-discord"></i></a>
+                    <a href="https://www.instagram.com/ryza.market?igsh=MTJmdHdraGZ3d2NydA=="><i class="fab fa-instagram"></i></a>
+                    <a href="https://youtube.com/@ryzareth?si=UjhPRL0SQZ3FfbXo"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Legal</h3>
+                <ul class="footer-links">
+                    <li><a href="#" data-page="privacy">Privacy Policy</a></li>
+                    <li><a href="#" data-page="terms">Terms of Service</a></li>
+                    <li><a href="#" data-page="dmca">DMCA Policy</a></li>
+                    <li><a href="#" data-page="security">Security</a></li>
+                    <li><a href="#" data-page="cookie">Cookie Policy</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Support</h3>
+                <ul class="footer-links">
+                    <li><a href="#" data-page="help">Help Center</a></li>
+                    <li><a href="#" data-page="contact">Contact Support</a></li>
+                    <li><a href="#" id="footerDonate">Donate</a></li>
+                    <li><a href="#" data-page="about">About Us</a></li>
+                    <li><a href="#" data-page="faqs">FAQs</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2025 QRaja. All rights reserved. | Gunakan QR Code dengan bijak dan bertanggung jawab.</p>
+        </div>
+    </footer>
+
+    <!-- File JavaScript eksternal -->
+    <script src="qr.js"></script>
+</body>
+</html>
